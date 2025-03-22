@@ -92,18 +92,17 @@ export async function getHtmlFromOpenAI({
 	})
 
 	const body: GPT4VCompletionRequest = {
-		model: 'gpt-4-turbo',
+		model: 'gemini-2.0-flash',
 		max_tokens: 4096,
 		temperature: 0,
 		messages,
-		seed: 42,
 		n: 1,
 	}
 
 	let json = null
 
 	try {
-		const resp = await fetch('https://api.openai.com/v1/chat/completions', {
+		const resp = await fetch('https://generativelanguage.googleapis.com/v1beta/openai/chat/completions', {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
@@ -139,7 +138,7 @@ type MessageContent =
 	  )[]
 
 export type GPT4VCompletionRequest = {
-	model: 'gpt-4-turbo'
+	model: 'gemini-2.0-flash'
 	messages: {
 		role: 'system' | 'user' | 'assistant' | 'function'
 		content: MessageContent
@@ -155,7 +154,6 @@ export type GPT4VCompletionRequest = {
 	best_of?: number | undefined
 	frequency_penalty?: number | undefined
 	presence_penalty?: number | undefined
-	seed?: number | undefined
 	logit_bias?:
 		| {
 				[x: string]: number
